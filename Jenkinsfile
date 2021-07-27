@@ -7,7 +7,7 @@ pipeline {
             steps{
                 cleanWs()
                 checkout scm: [$class: 'GitSCM', branches: [[name: 'main']],userRemoteConfigs:
-                [[credentialsId: 'github-ssh', url: 'git@github.com:misaeliana/test.git']]]
+                [[credentialsId: 'ssh-key', url: 'git@github.com:misaeliana/test.git']]]
             }
         }
 
