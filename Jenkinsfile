@@ -7,26 +7,26 @@ pipeline {
             steps{
                 cleanWs()
                 checkout scm: [$class: 'GitSCM', branches: [[name: 'main']],userRemoteConfigs:
-                [[credentialsId: 'github-ssh-key', url: 'git@github.com:tiffanyanneso/test.git']]]
+                [[credentialsId: 'github-ssh', url: 'git@github.com:misaeliana/test.git']]]
             }
         }
 
         stage('Build'){
             steps{
-                bat 'javac -cp "lib/junit-platform-console-standalone-1.7.0-all.jar" CalculatorTest.java Calculator.java main.java'
+                sh 'javac -cp "lib/junit-platform-console-standalone-1.7.0-all.jar" CalculatorTest.java Calculator.java main.java'
             }
         }
 
         stage('Test'){
             steps{
-                bat 'java -jar lib/junit-platform-console-standalone-1.7.0-all.jar -cp "." --select-class CalculatorTest --reports-dir="reports"'
+                sh 'java -jar lib/junit-platform-console-standalone-1.7.0-all.jar -cp "." --select-class CalculatorTest --reports-dir="reports"'
                 junit 'reports/*-jupiter.xml'
             }
         }
 
         stage('Deploy'){
             steps{
-                bat 'java main' 
+                sh 'java main' 
             }
         }
     }
